@@ -1,0 +1,14 @@
+﻿@model Answer
+
+
+
+<div class="card shadow mb-4 py-5">
+    <form method="post" class="col-6 m-auto my-3">
+        <input type="text" class="form-control" value="@Model.Option" name="Option" placeholder="Option" />
+        <span>
+            <label style="user-select:none" for="stat">Is True</label>
+            <input id="stat" value="true" @(Model.Status ? "checked" : null) type="checkbox" name="Status" />
+        </span>
+        <input type="submit" class="btn btn-outline-success mt-2" value="Edit" />
+    </form>
+</div>

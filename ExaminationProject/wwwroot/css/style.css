@@ -1,0 +1,36 @@
+body {
+  min-height: 100vh;
+  font-family: 'Lato', sans-serif;
+}
+
+body main {
+  background-color: #E5E7E9;
+}
+
+body main .exam-title span {
+  background-color: white;
+  font-size: 30px;
+  padding: 10px 20px;
+  -webkit-box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+          box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+}
+
+body main .exam-boxes .exam-box {
+  position: relative;
+  height: 200px;
+  width: 100%;
+  background-color: white;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+          box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+body main .exam-boxes .exam-box h4 {
+  position: absolute;
+  font-weight: bold;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  color: #4444eb;
+}
+/*# sourceMappingURL=style.css.map */

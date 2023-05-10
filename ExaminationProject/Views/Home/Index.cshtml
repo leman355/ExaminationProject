@@ -1,0 +1,22 @@
+﻿@model HomeVM
+<main>
+    <div class="container">
+        <div class="exam-title text-center py-5">
+            <span>Exams</span>
+        </div>
+        <div class="exam-boxes">
+            <div class="row">
+                @foreach (var exam in Model.ExamCategories)
+                {
+                    <div class="col-lg-4">
+                        <a href="examcategory/@exam.Id">
+                            <div class="exam-box mb-3">
+                                <h4>@exam.CategoryName</h4>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</main>

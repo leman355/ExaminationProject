@@ -1,0 +1,83 @@
+﻿@model UserVM
+@inject Microsoft.AspNetCore.Identity.UserManager<User> _userManager
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">
+            <a asp-area="Dashboard" asp-controller="User" asp-action="Create" class="text-decoration-none">Create</a>
+        </h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Picture</th>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Email</th>
+                        <th>CreatedDate</th>
+                        <th>UpdatedDate</th>
+                        <th>IsDeleted</th>
+                        <th>Group</th>
+                        <th>User roles</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Picture</th>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Email</th>
+                        <th>CreatedDate</th>
+                        <th>UpdatedDate</th>
+                        <th>IsDeleted</th>
+                        <th>Group</th>
+                        <th>User roles</th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var user in Model.Users)
+                    {
+                        <tr>
+                            <td>
+                                <img width="72" class="img-thumbnail" src="@user.PhotoUrl" />
+                            </td>
+                            <td>@user.UserName</td>
+                            <td>@user.Surname</td>
+                            <td>@user.Email</td>
+                            <td>@user.CreatedDate</td>
+                            <td>@user.UpdatedDate</td>
+                            <td>@user.IsDeleted</td>
+                            <td>
+                                @foreach (var userGroup in Model.UserGroups.Where(x => x.UserId == user.Id))
+                                {
+                                    <span class="btn btn-outline-success btn-sm my-1">@userGroup.Group.GroupName</span>
+                                }
+                            </td>
+                            <td>    
+                                @{
+                                    var roles = await _userManager.GetRolesAsync(user);
+                                    foreach (var role in roles)
+                                    {
+                                        <span class="badge badge-info">@role</span>   
+                                    }
+                                }
+                            </td>
+                            <td>
+                                <a asp-area="Dashboard" asp-controller="User" asp-action="AddRole" asp-route-id="@user.Id">Add role</a>
+                                @*<a href="/dashboard/role/delete/@user.Id">Delete</a>*@
+                                <a href="/dashboard/user/edit/@user.Id">Edit</a>
+                                <a href="/dashboard/user/delete/@user.Id" class="btn btn-outline-danger">Delete User</a>
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

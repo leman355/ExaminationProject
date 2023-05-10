@@ -1,0 +1,105 @@
+﻿<form method="post" enctype="multipart/form-data" class="col-6 m-auto my-3">
+
+
+    <select name="examCategoryId" class="form-control mb-4">
+        @foreach (var examCategory in ViewData["ExamCategories"] as IEnumerable<ExamCategory>)
+        {
+            <option value="@examCategory.Id">@examCategory.CategoryName</option>
+        }
+    </select>
+
+
+
+
+    <input type="text" class="form-control my-3" name="Content" placeholder="Content" />
+    <div id="input-container">
+        <div class="input-group my-2">
+            <input type="text" class="form-control" name="Option" placeholder="Answer option" />
+            <span class="input-group-text">
+                <input id="stat-true" type="checkbox" name="Status_1" value="true" />
+            </span>
+                <button type="button" class="btn btn-outline-danger btn-delete" disabled>X</button>
+        </div>
+    </div>
+    <button class="btn btn-outline-dark my-3" id="add-input-button" type="button">Add input</button>
+    <p>Input count:  <span id="input-count">1</span></p>
+    <br />
+    <span>
+        <label style="user-select:none" for="deleted">Is Deleted</label>
+        <input value="true" id="deleted" type="checkbox" name="IsDeleted" />
+    </span>
+    <br />
+    <input type="submit" class="btn btn-outline-success mt-3" value="Create" />
+</form>
+
+
+<script>
+    const inputContainer = document.querySelector('#input-container');
+    const addButton = document.querySelector('#add-input-button');
+    const p = document.querySelector('#input-count');
+    let inputCount = 1;
+
+    addButton.addEventListener('click', () => {
+        inputCount++;
+
+        const newInputGroup = document.createElement('div');
+        newInputGroup.className = 'input-group my-2';
+
+        const newInput = document.createElement('input');
+        newInput.type = 'text';
+        newInput.className = 'form-control';
+        newInput.name = 'Option';
+        newInput.placeholder = 'Answer option';
+
+        const newCheckbox = document.createElement('input');
+        newCheckbox.type = 'checkbox';
+        newCheckbox.name = `Status_${inputCount - 1}`;
+        newCheckbox.value = 'true';
+        newCheckbox.id = `stat-${inputCount - 1}`;
+
+        const newSpan = document.createElement('span');
+        newSpan.className = 'input-group-text';
+
+        const newButton = document.createElement('button');
+        newButton.type = 'button';
+        newButton.className = 'btn btn-outline-danger btn-delete';
+        newButton.textContent = 'X';
+        newButton.disabled = true;
+        newSpan.appendChild(newCheckbox);
+
+        p.innerHTML = `${inputCount}`;
+        newInputGroup.appendChild(newInput);
+        newInputGroup.appendChild(newSpan);
+        inputContainer.appendChild(newInputGroup);
+        newInputGroup.appendChild(newButton);
+
+        newInput.addEventListener('input', () => {
+            newButton.disabled = newInput.value.length === 0;
+        });
+        newButton.addEventListener('click', () => {
+            newInputGroup.parentNode.removeChild(newInputGroup);
+            inputCount--;
+            p.innerHTML = `${inputCount}`;
+
+            const allCheckboxes = document.querySelectorAll('input[name^="Status_"]');
+            allCheckboxes.forEach((checkbox, index) => {
+                checkbox.name = `Status_${index}`;
+                checkbox.id = `status_${index}`;
+            });
+        });
+    }); 
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const firstInput = document.querySelector('#input-container input');
+        const firstButton = document.querySelector('#input-container button');
+
+        firstInput.addEventListener('input', () => {
+            firstButton.disabled = firstInput.value.length === 0;
+        });
+
+        firstButton.addEventListener('click', () => {
+            firstInput.value = '';
+            firstButton.disabled = true;
+        });
+    });
+</script>

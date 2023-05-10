@@ -1,0 +1,17 @@
+﻿<form method="post" enctype="multipart/form-data" class="col-6 m-auto my-3">
+    <input type="text" class="form-control mb-4" name="UserName" placeholder="Username" />
+    <input type="text" class="form-control mb-4" name="Surname" placeholder="Surname" />
+    <input type="text" class="form-control mb-4" name="Email" placeholder="Email" />
+    <input type="file" class="form-control mb-4" name="NewPhoto" placeholder="PhotoUrl" />
+    <span>
+        <label style="user-select:none" for="deleted">Is Deleted</label>
+        <input id="deleted" type="checkbox" name="Is Deleted" />
+    </span>
+    <select name="groupId" class="form-control mb-4">
+        @foreach (var group in ViewData["Groups"] as IEnumerable<Group>)
+        {
+            <option value="@group.Id">@group.GroupName</option>
+        }
+    </select>
+    <input type="submit" class="btn btn-outline-success mt-2" value="create" />
+</form>

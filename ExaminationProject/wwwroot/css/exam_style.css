@@ -1,0 +1,18 @@
+body {
+  min-height: 100vh;
+  font-family: 'Lato', sans-serif;
+}
+
+body .navbar .navbar-collapse .navbar-nav a {
+  font-size: 25px;
+}
+
+body main {
+  background-color: #E5E7E9;
+  height: 100vh;
+}
+
+body main .title {
+  color: #8686e0;
+}
+/*# sourceMappingURL=exam_style.css.map */
