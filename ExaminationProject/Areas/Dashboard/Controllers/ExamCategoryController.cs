@@ -31,6 +31,11 @@ namespace Web.Areas.Dashboard.Controllers
         {
             try
             {
+                if (_context.ExamCategories.Any(ec => ec.CategoryName == examCategory.CategoryName))
+                {
+                    ViewBag.ErrorMessage = "An ExamCategory with the same name already exists.";
+                    return View(examCategory);
+                }
                 examCategory.IsDeleted = IsDeleted;
                 _context.ExamCategories.Add(examCategory);
                 await _context.SaveChangesAsync();

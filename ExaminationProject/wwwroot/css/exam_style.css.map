@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAEA,AAAA,IAAI,CAAC;EACD,UAAU,EAAE,KAAK;EACjB,WAAW,EAAE,kBAAkB;CA0BlC;;AA5BD,AAOgB,IAPZ,CAIA,OAAO,CACH,gBAAgB,CACZ,WAAW,CACP,CAAC,CAAC;EACE,SAAS,EAAE,IAAI;CAClB;;AATjB,AAcI,IAdA,CAcA,IAAI,CAAC;EACD,gBAAgB,EAAE,OAAO;EACzB,MAAM,EAAE,KAAK;CAWhB;;AA3BL,AAkBQ,IAlBJ,CAcA,IAAI,CAIA,MAAM,CAAC;EACH,KAAK,EAAE,OAAkB;CAE5B",
-    "sources": [
-        "exam_style.scss"
-    ],
-    "names": [],
-    "file": "exam_style.css"
-}

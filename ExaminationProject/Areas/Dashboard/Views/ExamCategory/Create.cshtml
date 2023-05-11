@@ -1,6 +1,12 @@
 ﻿<div class="card shadow mb-4 py-5">
     <form method="post" class="col-6 m-auto my-3">
         <input type="text" class="form-control" name="CategoryName" placeholder="Category Name" />
+        <input required type="text" class="form-control" name="CategoryName" placeholder="Category Name" />
+        @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+        {
+            <span class="text-danger">@ViewBag.ErrorMessage</span>
+        }
+
         <br />
         <span>
             <label style="user-select:none" for="deleted">Is Deleted</label>

@@ -7329,18 +7329,6 @@
       "PackagePath": "staticwebassets\\admin\\vendor\\jquery\\jquery.slim.min.map"
     },
     {
-      "Id": "C:\\Users\\user\\Desktop\\ExaminationProject\\ExaminationProject\\wwwroot\\css\\exam_style.css",
-      "PackagePath": "staticwebassets\\css\\exam_style.css"
-    },
-    {
-      "Id": "C:\\Users\\user\\Desktop\\ExaminationProject\\ExaminationProject\\wwwroot\\css\\exam_style.css.map",
-      "PackagePath": "staticwebassets\\css\\exam_style.css.map"
-    },
-    {
-      "Id": "C:\\Users\\user\\Desktop\\ExaminationProject\\ExaminationProject\\wwwroot\\css\\exam_style.scss",
-      "PackagePath": "staticwebassets\\css\\exam_style.scss"
-    },
-    {
       "Id": "C:\\Users\\user\\Desktop\\ExaminationProject\\ExaminationProject\\wwwroot\\css\\style.css",
       "PackagePath": "staticwebassets\\css\\style.css"
     },

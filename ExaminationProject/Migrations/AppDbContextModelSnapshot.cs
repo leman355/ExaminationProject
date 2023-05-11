@@ -106,7 +106,16 @@ namespace ExaminationProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ExamId")
+                    b.Property<int>("CorrectAnswers")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateTaken")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ExamCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalQuestions")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
@@ -115,7 +124,7 @@ namespace ExaminationProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ExamId");
+                    b.HasIndex("ExamCategoryId");
 
                     b.HasIndex("UserId");
 
@@ -460,9 +469,9 @@ namespace ExaminationProject.Migrations
 
             modelBuilder.Entity("ExaminationProject.Models.ExamResult", b =>
                 {
-                    b.HasOne("ExaminationProject.Models.Exam", "Exam")
+                    b.HasOne("ExaminationProject.Models.ExamCategory", "ExamCategory")
                         .WithMany()
-                        .HasForeignKey("ExamId")
+                        .HasForeignKey("ExamCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -472,7 +481,7 @@ namespace ExaminationProject.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Exam");
+                    b.Navigation("ExamCategory");
 
                     b.Navigation("User");
                 });

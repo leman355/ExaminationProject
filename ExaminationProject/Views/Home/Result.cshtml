@@ -1,0 +1,32 @@
+﻿@model ExamResultVM
+
+<h1>@Model.ExamCategory</h1>
+
+@if (Model.ExamResults.Any())
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Date Taken</th>
+                <th>Correct Answers</th>
+                <th>Total Questions</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var result in Model.ExamResults)
+            {
+                <tr>
+                    <td>@result.DateTaken.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                    <td>@result.CorrectAnswers</td>
+                    <td>@result.TotalQuestions</td>
+                    <td>@(result.CorrectAnswers * 100 / result.TotalQuestions)%</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No results found.</p>
+}
