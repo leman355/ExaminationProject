@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "pMo+7/htdthddgvSkvTku2x7RL7RGSOoRCgbivT+5yI=",
+  "Hash": "It0wHWaypw5d7VoUDu5a2S2Aa5m+s+rSVINZZF98Nco=",
   "Source": "ExaminationProject",
   "BasePath": "_content/ExaminationProject",
   "Mode": "Default",
@@ -32281,6 +32281,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\700f3681-b5ff-476b-bf94-81bd9acc9ffd1153100.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\user\\Desktop\\ExaminationProject\\ExaminationProject\\wwwroot\\uploads\\ac5455bf-2e12-441c-9f49-bc78af8cd46e1. Черный кот с рыбкой.jpg",
+      "SourceId": "ExaminationProject",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\user\\Desktop\\ExaminationProject\\ExaminationProject\\wwwroot\\",
+      "BasePath": "_content/ExaminationProject",
+      "RelativePath": "uploads/ac5455bf-2e12-441c-9f49-bc78af8cd46e1. Черный кот с рыбкой.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\ac5455bf-2e12-441c-9f49-bc78af8cd46e1. Черный кот с рыбкой.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\user\\Desktop\\ExaminationProject\\ExaminationProject\\wwwroot\\uploads\\e9c46057-83d9-47e7-80df-bbc12e145d0b6. Жираф.jpg",
+      "SourceId": "ExaminationProject",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\user\\Desktop\\ExaminationProject\\ExaminationProject\\wwwroot\\",
+      "BasePath": "_content/ExaminationProject",
+      "RelativePath": "uploads/e9c46057-83d9-47e7-80df-bbc12e145d0b6. Жираф.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\e9c46057-83d9-47e7-80df-bbc12e145d0b6. Жираф.jpg"
     },
     {
       "Identity": "C:\\Users\\user\\Desktop\\ExaminationProject\\ExaminationProject\\wwwroot\\vendors\\css\\bootstrap.css",

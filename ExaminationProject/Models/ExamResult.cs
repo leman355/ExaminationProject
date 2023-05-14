@@ -6,6 +6,7 @@
         public string UserId { get; set; }
         public virtual User User { get; set; }
         public int ExamCategoryId { get; set; }
+        //[ForeignKey("ExamCategoryId")]
         public ExamCategory ExamCategory { get; set; }
         public int CorrectAnswers { get; set; }
         public int TotalQuestions { get; set; }

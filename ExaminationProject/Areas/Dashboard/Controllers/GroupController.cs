@@ -5,8 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ExaminationProject.Areas.Dashboard.Controllers
 {
-
-    [Area("Dashboard")]
+    [Area(nameof(Dashboard))]
     public class GroupController : Controller
     {
         private readonly AppDbContext _context;
@@ -28,13 +27,16 @@ namespace ExaminationProject.Areas.Dashboard.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Group group)
+        public async Task<IActionResult> Create(Group group, bool IsDeleted)
         {
             try
             {
+                group.IsDeleted = IsDeleted;
+                group.CreatedDate = DateTime.Now;
+                group.UpdatedDate = DateTime.Now;
                 _context.Groups.Add(group);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception)
             {
@@ -49,15 +51,22 @@ namespace ExaminationProject.Areas.Dashboard.Controllers
             return View(edit);
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(Group group)
+        public async Task<IActionResult> Edit(Group group, bool IsDeleted)
         {
-
             try
             {
+                DateTime createdDate = _context.Groups.AsNoTracking().FirstOrDefault(x => x.Id == group.Id)?.CreatedDate ?? DateTime.MinValue;
+                if (createdDate != DateTime.MinValue)
+                {
+                    group.CreatedDate = createdDate;
+                }
+                _context.Entry(group).Property(x => x.CreatedDate).IsModified = false;
+
+                group.IsDeleted = IsDeleted;
                 group.UpdatedDate = DateTime.Now;
                 _context.Groups.Update(group);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception)
             {
@@ -78,7 +87,7 @@ namespace ExaminationProject.Areas.Dashboard.Controllers
                 var gr = await _context.Groups.SingleOrDefaultAsync(x => x.Id == group.Id);
                 gr.IsDeleted = true;
                 _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception)
             {

@@ -29,8 +29,8 @@ namespace ExaminationProject.Areas.Dashboard.Controllers
         }
         public IActionResult Index()
         {
-            UserVM vm = new ();
-            vm.Users = _userManager.Users.ToList(); 
+            UserVM vm = new();
+            vm.Users = _userManager.Users.ToList();
             vm.Groups = _context.Groups.ToList();
             vm.UserGroups = _context.UserGroups.ToList();
             //var users = _userManager.Users.ToList();
@@ -40,15 +40,24 @@ namespace ExaminationProject.Areas.Dashboard.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            var group = _context.Groups.Where(x => x.IsDeleted == false).ToList();
+
+            if (group.Count == 0)
+            {
+                return RedirectToAction("Create", "Group");
+            }
+
             ViewData["Groups"] = _context.Groups.Where(x => x.IsDeleted == false).ToList();
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(User user, IFormFile NewPhoto, int groupId)
+        public async Task<IActionResult> Create(User user, IFormFile NewPhoto, int groupId, bool IsDeleted)
         {
             var passwordHasher = new PasswordHasher<IdentityUser>();
             user.PasswordHash = passwordHasher.HashPassword(user, "123123Az@");
             user.CreatedDate = DateTime.Now;
+            user.UpdatedDate = DateTime.Now;
+            user.IsDeleted = IsDeleted;
 
             user.PhotoUrl = ImageHelper.UploadImage(NewPhoto, _webHostEnvironment);
 
@@ -64,7 +73,7 @@ namespace ExaminationProject.Areas.Dashboard.Controllers
 
             _context.UserGroups.Add(userGroup);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
 
@@ -107,8 +116,14 @@ namespace ExaminationProject.Areas.Dashboard.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
+            var gr = await _context.Groups.Where(x => x.IsDeleted == false).ToListAsync();
+             if (gr.Count == 0)
+            {
+                return RedirectToAction("Create", "Group");
+            }
+
             var usr = await _userManager.FindByIdAsync(id);
-            var group = await _context.Groups.ToListAsync();
+            var group = _context.Groups.Where(x => x.IsDeleted == false).ToList();
             var userGroup = await _context.UserGroups.Where(x => x.UserId == usr.Id).ToListAsync();
 
             UserEditVM editVM = new()
@@ -120,8 +135,9 @@ namespace ExaminationProject.Areas.Dashboard.Controllers
             return View(editVM);
         }
 
+
         [HttpPost]
-        public async Task<IActionResult> Edit(User user, IFormFile NewPhoto, string OldPhoto, int groupId)
+        public async Task<IActionResult> Edit(User user, IFormFile NewPhoto, string OldPhoto, int groupId, bool IsDeleted)
         {
             try
             {
@@ -134,13 +150,23 @@ namespace ExaminationProject.Areas.Dashboard.Controllers
                     user.PhotoUrl = OldPhoto;
                 }
 
-                user.UpdatedDate = DateTime.Now;
+                DateTime createdDate = _context.Users.AsNoTracking().FirstOrDefault(x => x.Id == user.Id)?.CreatedDate ?? DateTime.MinValue;
+                if (createdDate != DateTime.MinValue)
+                {
+                    user.CreatedDate = createdDate;
+                }
+                _context.Entry(user).Property(x => x.CreatedDate).IsModified = false;
+
+                //user.IsDeleted = IsDeleted;
+                //user.UpdatedDate = DateTime.Now;
                 var data = await _userManager.FindByIdAsync(user.Id);
                 data.Surname = user.Surname;
                 data.Email = user.Email;
                 data.UserName = user.UserName;
+                data.IsDeleted = IsDeleted;
+                data.UpdatedDate = DateTime.Now;
 
-                await _userManager.UpdateAsync(user);
+                await _userManager.UpdateAsync(data);
                 await _context.SaveChangesAsync();
 
                 var userGroup = await _context.UserGroups.Where(x => x.UserId == user.Id).ToListAsync();
@@ -153,8 +179,7 @@ namespace ExaminationProject.Areas.Dashboard.Controllers
                 };
                 await _context.UserGroups.AddAsync(ug);
                 await _context.SaveChangesAsync();
-
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception e)
             {
@@ -179,7 +204,7 @@ namespace ExaminationProject.Areas.Dashboard.Controllers
                 var us = await _context.Users.SingleOrDefaultAsync(x => x.Id == user.Id);
                 us.IsDeleted = true;
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception)
             {

@@ -6,6 +6,6 @@ namespace ExaminationProject.Areas.Dashboard.ViewModels
     {
         public User User { get; set; }
         public List<Group> Groups { get; set; }
-        public List<UserGroup> UserGroups { get; set; }
+        public List<UserGroup> UserGroups { get; set; } 
     }
 }

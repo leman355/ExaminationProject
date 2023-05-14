@@ -58,20 +58,22 @@
                                     <span class="btn btn-outline-success btn-sm my-1">@userGroup.Group.GroupName</span>
                                 }
                             </td>
-                            <td>    
+                            <td>
                                 @{
                                     var roles = await _userManager.GetRolesAsync(user);
                                     foreach (var role in roles)
                                     {
-                                        <span class="badge badge-info">@role</span>   
+                                        <span class="badge badge-info">@role</span>
                                     }
                                 }
                             </td>
                             <td>
-                                <a asp-area="Dashboard" asp-controller="User" asp-action="AddRole" asp-route-id="@user.Id">Add role</a>
+                                <div class="d-flex">
+                                <a asp-area="Dashboard" asp-controller="User" asp-action="AddRole" asp-route-id="@user.Id" class="badge btn-outline-info">Add role</a>
                                 @*<a href="/dashboard/role/delete/@user.Id">Delete</a>*@
-                                <a href="/dashboard/user/edit/@user.Id">Edit</a>
-                                <a href="/dashboard/user/delete/@user.Id" class="btn btn-outline-danger">Delete User</a>
+                                <a href="/dashboard/user/edit/@user.Id" class="badge btn-outline-warning">Edit</a>
+                                </div>
+                                <a href="/dashboard/user/delete/@user.Id" class="badge btn-outline-danger">Delete User</a>
 
                             </td>
                         </tr>

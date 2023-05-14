@@ -6,24 +6,25 @@
 }
 
 <form method="post" enctype="multipart/form-data" class="col-6 m-auto my-3">
-    <input type="text" value="@Model.User.UserName" class="form-control mb-4" name="UserName" placeholder="UserName" />
-    <input type="text" value="@Model.User.Surname" class="form-control mb-4" name="Surname" placeholder="Surname" />
-    <input type="text" value="@Model.User.Email" class="form-control mb-4" name="Email" placeholder="Email" />
+    @if (Model.User != null)
+    {
+        <input type="text" value="@Model.User.UserName" class="form-control mb-4" name="UserName" placeholder="UserName" />
+        <input type="text" value="@Model.User.Surname" class="form-control mb-4" name="Surname" placeholder="Surname" />
+        <input type="text" value="@Model.User.Email" class="form-control mb-4" name="Email" placeholder="Email" />
 
-    <input type="hidden" name="OldPhoto" value="@Model.User.PhotoUrl" />
-    <img src="@Model.User.PhotoUrl" width="500" height="250" class="mb-2" />
-    <input type="file" class="form-control mb-4" name="NewPhoto" placeholder="PhotoUrl" />
-    <span>
-        <label style="user-select:none" for="deleted">Is Deleted</label>
-        <input id="deleted" value="true" @(Model.User.IsDeleted ? "checked" : null) type="checkbox" name="IsDeleted" />
-    </span>
-    <select name="groupId" class="form-control mb-4">
-        @foreach (var group in Model.Groups)
-        {
-            <!option @(Model.UserGroups.Any(x => x.GroupId == group.Id) == true ? "selected" : null) value="@group.Id">@group.GroupName</!option>
-        }
-    </select>
-    <input type="submit" class="btn btn-outline-primary mt-2" value="update" />
+        <input type="hidden" name="OldPhoto" value="@Model.User.PhotoUrl" />
+        <img src="@Model.User.PhotoUrl" width="500" height="250" class="mb-2" />
+        <input type="file" class="form-control mb-4" name="NewPhoto" placeholder="PhotoUrl" />
+        <span>
+            <label style="user-select:none" for="deleted">Is Deleted</label>
+            <input id="deleted" value="true" @(Model.User.IsDeleted ? "checked" : null) type="checkbox" name="IsDeleted" />
+        </span>
+        <select name="groupId" class="form-control mb-4">
+            @foreach (var group in Model.Groups)
+            {
+                <!option @(Model.UserGroups.Any(x => x.GroupId == group.Id) == true ? "selected" : null) value="@group.Id">@group.GroupName</!option>
+            }
+        </select>
+        <input type="submit" class="btn btn-outline-primary mt-2" value="update" />
+    }
 </form>
-
-

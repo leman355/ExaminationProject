@@ -10,5 +10,6 @@ namespace ExaminationProject.ViewModels
         public List<Answer> Answers { get; set; }
         public List<QuestionAnswer> QuestionAnswers { get; set; }
         public List<int> SelectedAnswerIds { get; set; }
+        public List<int> CorrectAnswerIds { get; set; }
     }
 }

@@ -33,7 +33,7 @@ namespace Web.Areas.Dashboard.Controllers
             {
                 _context.Answers.Add(answer);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception)
             {

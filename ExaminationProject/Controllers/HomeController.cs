@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Options;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Security.Claims;
 
@@ -29,7 +30,7 @@ namespace ExaminationProject.Controllers
             {
                 ExamCategories = _context.ExamCategories.Where(x => x.IsDeleted == false).ToList(),
             };
-            
+
             return View(vm);
         }
 
@@ -45,6 +46,16 @@ namespace ExaminationProject.Controllers
                 .Where(x => questionIds.Contains(x.QuestionId))
                 .ToList();
             var answers = questionAnswers.Select(x => x.Answer).Distinct().ToList();
+            var correctAnswerIds = new List<int>();
+            foreach (var question in questions)
+            {
+                var questionAnswersWithStatus = _context.QuestionAnswers
+                    .Include(x => x.Answer)
+                    .Where(x => x.QuestionId == question.Id && x.Answer.Status)
+                    .ToList();
+
+                correctAnswerIds.AddRange(questionAnswersWithStatus.Select(x => x.Answer.Id));
+            }
 
             var viewModel = new ExamCategoryVM
             {
@@ -53,8 +64,8 @@ namespace ExaminationProject.Controllers
                 Questions = questions,
                 Answers = answers,
                 QuestionAnswers = questionAnswers,
+                CorrectAnswerIds = correctAnswerIds,
             };
-
             return View(viewModel);
         }
 
@@ -79,6 +90,18 @@ namespace ExaminationProject.Controllers
 
             var answers = questionAnswers.Select(x => x.Answer).Distinct().ToList();
 
+            var correctAnswerIds = new List<int>();
+            foreach (var question in questions)
+            {
+                var questionAnswersWithStatus = _context.QuestionAnswers
+                    .Include(x => x.Answer)
+                    .Where(x => x.QuestionId == question.Id && x.Answer.Status)
+                    .ToList();
+
+                correctAnswerIds.AddRange(questionAnswersWithStatus.Select(x => x.Answer.Id));
+            }
+
+
             var viewModel = new ExamCategoryVM
             {
                 SelectedCategoryId = id,
@@ -87,133 +110,55 @@ namespace ExaminationProject.Controllers
                 Answers = answers,
                 QuestionAnswers = questionAnswers,
                 SelectedAnswerIds = selectedAnswerIds,
+                CorrectAnswerIds = correctAnswerIds,
             };
-              return RedirectToAction(nameof(Result));
-            //return View(viewModel);
+            TempData["ExamCategoryVM"] = JsonConvert.SerializeObject(viewModel);
+            return RedirectToAction("Result", "Home");
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //[HttpPost("examcategory/{id}")]
-        //public IActionResult ExamCategory(int id, int[] selectedAnswerIds)
-        //{
-        //    var examCategory = _context.ExamCategories.Where(x => x.Id == id).FirstOrDefault();
-        //    var questions = _context.Questions.Where(x => x.ExamCategoryId == id).ToList();
-        //    var questionIds = questions.Select(x => x.Id).ToList();
-        //    var questionAnswers = _context.QuestionAnswers
-        //        .Include(x => x.Answer)
-        //        .Where(x => questionIds.Contains(x.QuestionId))
-        //        .ToList();
-        //    var answers = questionAnswers.Select(x => x.Answer).Distinct().ToList();
-
-
-        //    // Проверяем, есть ли выбранные ответы для каждого вопроса
-
-
-        //    var viewModel = new ExamCategoryVM
-        //    {
-        //        SelectedCategoryId = id,
-        //        SelectedCategoryName = examCategory.CategoryName,
-        //        Questions = questions,
-        //        Answers = answers,
-        //        QuestionAnswers = questionAnswers,
-        //        SelectedAnswerIds = selectedAnswerIds,
-        //    };
-
-            //    foreach (var questionAnswer in viewModel.QuestionAnswers)
-            //    {
-            //        if (questionAnswer.Answer.Status == true)
-            //        {
-            //            // Ищем выбранный ответ для этого вопроса
-            //            var selectedAnswer = selectedAnswers.FirstOrDefault(x => x == questionAnswer.Answer.Id);
-            //            if (selectedAnswer != 0)
-            //            {
-            //                // Устанавливаем свойство selected в true для правильного ответа
-            //                questionAnswer.Answer.Selected = true;
-            //            }
-            //        }
-            //    }
-
-
-
-            //    // Если есть ошибки валидации, возвращаем представление с сообщениями об ошибках
-            //    if (!ModelState.IsValid)
-            //    {
-            //        return View(viewModel);
-            //    }
-
-            //    // Подсчитываем количество правильных ответов и общее количество вопросов
-            //    int correctAnswersCount = 0;
-            //    int totalQuestionsCount = 0;
-            //    foreach (var question in viewModel.Questions)
-            //    {
-            //        totalQuestionsCount++;
-            //        var selectedAnswersForQuestion = selectedAnswers.Where(x => x.ToString().StartsWith(question.Id.ToString())).ToList();
-            //        if (selectedAnswersForQuestion.Count == 1)
-            //        {
-            //            var selectedAnswerId = selectedAnswersForQuestion[0];
-            //            var questionAnswer = viewModel.QuestionAnswers.FirstOrDefault(x => x.QuestionId == question.Id && x.AnswerId == selectedAnswerId);
-            //            if (questionAnswer != null && questionAnswer.Answer.Status == true)
-            //            {
-            //                correctAnswersCount++;
-            //            }
-            //        }
-            //    }
-
-            //    var examResult = new ExamResult
-            //    {
-            //        UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value, // идентификатор текущего пользователя
-            //        ExamCategoryId = id,
-            //        CorrectAnswers = correctAnswersCount,
-            //        TotalQuestions = totalQuestionsCount,
-            //        DateTaken = DateTime.UtcNow
-            //    };
-
-            //    // Добавляем результат экзамена в базу данных
-            //    _context.ExamResults.Add(examResult);
-            //    _context.SaveChanges();
-
-            //    // Если ошибок нет, перенаправляем на другую страницу
-        //    return RedirectToAction(nameof(Result));
-        //}
-
-        public IActionResult Result(int id)
+        [HttpGet]
+        public IActionResult Result()
         {
-            var results = _context.ExamResults
-                .Where(x => x.ExamCategoryId == id && x.UserId == User.FindFirstValue(ClaimTypes.NameIdentifier))
-                .OrderByDescending(x => x.DateTaken)
+            var examCategoryVM = JsonConvert.DeserializeObject<ExamCategoryVM>(TempData["ExamCategoryVM"].ToString());
+
+            int correctAnswersCount = examCategoryVM.QuestionAnswers
+                .Where(qa => qa.Answer.Status) 
+                .Count(qa => examCategoryVM.SelectedAnswerIds.Contains(qa.Answer.Id));
+
+            var examResult = new ExamResult
+            {
+                UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                ExamCategoryId = examCategoryVM.SelectedCategoryId,
+                CorrectAnswers = correctAnswersCount,
+                TotalQuestions = examCategoryVM.Questions.Count,
+                DateTaken = DateTime.Now,
+            };
+
+            _context.ExamResults.Add(examResult);
+            _context.SaveChanges();
+
+            var examCategory = _context.ExamCategories.FirstOrDefault(ec => ec.Id == examCategoryVM.SelectedCategoryId);
+
+            var examResults = _context.ExamResults
+                .Include(er => er.User)
+                .Where(er => er.ExamCategoryId == examCategory.Id)
                 .ToList();
 
-            var viewModel = new ExamResultVM
+            var examResultVM = new ExamResultVM
             {
-                ExamCategory = _context.ExamCategories.Find(id),
-                ExamResults = results
+                ExamResults = examResults,
+                SelectedCategoryId = examCategoryVM.SelectedCategoryId,
+                SelectedCategoryName = examCategoryVM.SelectedCategoryName,
+                Questions = examCategoryVM.Questions,
+                Answers = examCategoryVM.Answers,
+                QuestionAnswers = examCategoryVM.QuestionAnswers,
+                SelectedAnswerIds = examCategoryVM.SelectedAnswerIds,
+                CorrectAnswerIds = examCategoryVM.CorrectAnswerIds,
+                CorrectAnswerCount= correctAnswersCount,
             };
 
-            return View(viewModel);
+            return View(examResultVM);
         }
-
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -19,10 +19,10 @@ namespace Web.Areas.Dashboard.Controllers
         public IActionResult Index()
         {
 
-           var questions = _context.Questions.Include(x => x.ExamCategory).ToList();
+            var questions = _context.Questions.Include(x => x.ExamCategory).ToList();
 
 
-           // var questions = _context.Questions.ToList();
+            // var questions = _context.Questions.ToList();
             var questionAnswers = _context.QuestionAnswers.Include(x => x.Answer).ToList();
             var answer = _context.Answers.ToList();
 
@@ -55,7 +55,7 @@ namespace Web.Areas.Dashboard.Controllers
         {
             try
             {
-            
+
                 question.IsDeleted = IsDeleted;
                 question.ExamCategoryId = examCategoryId;
                 await _context.Questions.AddAsync(question);
@@ -145,7 +145,7 @@ namespace Web.Areas.Dashboard.Controllers
                 _context.QuestionAnswers.RemoveRange(questionAnswers);
                 await _context.SaveChangesAsync();
 
-            
+
                 for (int i = 0; i < Option.Length; i++)
                 {
                     if (Option[i] != null)
