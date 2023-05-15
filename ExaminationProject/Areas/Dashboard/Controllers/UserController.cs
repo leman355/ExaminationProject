@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Web.Helper;
+using WebApp.DTOs;
 
 namespace ExaminationProject.Areas.Dashboard.Controllers
 {

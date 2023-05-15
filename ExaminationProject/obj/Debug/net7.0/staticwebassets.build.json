@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "It0wHWaypw5d7VoUDu5a2S2Aa5m+s+rSVINZZF98Nco=",
+  "Hash": "2HbMMKaR9pEnJ+mYBnnILAlxMGJh3VtQKqAAnQHWdLU=",
   "Source": "ExaminationProject",
   "BasePath": "_content/ExaminationProject",
   "Mode": "Default",
@@ -32298,6 +32298,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\ac5455bf-2e12-441c-9f49-bc78af8cd46e1. Черный кот с рыбкой.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\user\\Desktop\\ExaminationProject\\ExaminationProject\\wwwroot\\uploads\\da60b722-3d0d-4ccb-91c5-de6a2502c8797. Бабочка.jpg",
+      "SourceId": "ExaminationProject",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\user\\Desktop\\ExaminationProject\\ExaminationProject\\wwwroot\\",
+      "BasePath": "_content/ExaminationProject",
+      "RelativePath": "uploads/da60b722-3d0d-4ccb-91c5-de6a2502c8797. Бабочка.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\da60b722-3d0d-4ccb-91c5-de6a2502c8797. Бабочка.jpg"
     },
     {
       "Identity": "C:\\Users\\user\\Desktop\\ExaminationProject\\ExaminationProject\\wwwroot\\uploads\\e9c46057-83d9-47e7-80df-bbc12e145d0b6. Жираф.jpg",
