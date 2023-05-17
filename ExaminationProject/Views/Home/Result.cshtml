@@ -52,7 +52,17 @@
             }
         </ol>
     </div>
-   <div class="result mt-3 text-center">
-        <p class="lead">You have answered @Model.CorrectAnswerCount out of @Model.Questions.Count(q => !q.IsDeleted) questions correctly.</p>
+    <div class="result mt-3 text-center">
+        @{
+            int totalQuestions = Model.Questions.Count(q => !q.IsDeleted);
+            int correctAnswerCount = Model.CorrectAnswerCount;
+            int percentage = (int)(((double)correctAnswerCount / totalQuestions) * 100);
+        }
+        <p class="lead">You have answered @correctAnswerCount out of @totalQuestions questions correctly.</p>
+        <p class="lead">Percentage of correct answers: @percentage%</p>
     </div>
+
+   @*<div class="result mt-3 text-center">
+        <p class="lead">You have answered @Model.CorrectAnswerCount out of @Model.Questions.Count(q => !q.IsDeleted) questions correctly.</p>
+    </div>*@
 </main>

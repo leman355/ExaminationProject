@@ -117,7 +117,7 @@ namespace ExaminationProject.Controllers
         }
 
         [HttpGet]
-        public IActionResult Result()
+        public async Task<IActionResult> Result()
         {
             var examCategoryVM = JsonConvert.DeserializeObject<ExamCategoryVM>(TempData["ExamCategoryVM"].ToString());
 
@@ -135,7 +135,7 @@ namespace ExaminationProject.Controllers
             };
 
             _context.ExamResults.Add(examResult);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             var examCategory = _context.ExamCategories.FirstOrDefault(ec => ec.Id == examCategoryVM.SelectedCategoryId);
 
