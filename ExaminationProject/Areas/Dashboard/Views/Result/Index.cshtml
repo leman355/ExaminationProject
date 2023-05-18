@@ -17,6 +17,7 @@
                         <th>Exam Category</th>
                         <th>CorrectAnswers</th>
                         <th>TotalQuestions</th>
+                        <th>Percent</th>
                         <th>DateTaken</th>
                     </tr>
                 </thead>
@@ -27,6 +28,7 @@
                         <th>Exam Category</th>
                         <th>CorrectAnswers</th>
                         <th>TotalQuestions</th>
+                        <th>Percent</th>
                         <th>DateTaken</th>
                     </tr>
                 </tfoot>
@@ -39,6 +41,7 @@
                             <td>@result.ExamCategory.CategoryName</td>
                             <td>@result.CorrectAnswers</td>
                             <td>@result.TotalQuestions</td>
+                            <td>@Math.Round(((double)result.CorrectAnswers / result.TotalQuestions) * 100)%</td>
                             <td>@result.DateTaken</td>
                         </tr>
                     }

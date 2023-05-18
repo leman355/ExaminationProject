@@ -101,7 +101,6 @@ namespace ExaminationProject.Controllers
                 correctAnswerIds.AddRange(questionAnswersWithStatus.Select(x => x.Answer.Id));
             }
 
-
             var viewModel = new ExamCategoryVM
             {
                 SelectedCategoryId = id,
@@ -112,56 +111,49 @@ namespace ExaminationProject.Controllers
                 SelectedAnswerIds = selectedAnswerIds,
                 CorrectAnswerIds = correctAnswerIds,
             };
-            TempData["ExamCategoryVM"] = JsonConvert.SerializeObject(viewModel);
-            return RedirectToAction("Result", "Home");
-        }
 
-        [HttpGet]
-        public async Task<IActionResult> Result()
-        {
-            var examCategoryVM = JsonConvert.DeserializeObject<ExamCategoryVM>(TempData["ExamCategoryVM"].ToString());
-
-            int correctAnswersCount = examCategoryVM.QuestionAnswers
-                .Where(qa => qa.Answer.Status) 
-                .Count(qa => examCategoryVM.SelectedAnswerIds.Contains(qa.Answer.Id));
+            int correctAnswersCount = viewModel.QuestionAnswers
+               .Where(qa => qa.Answer.Status)
+               .Count(qa => viewModel.SelectedAnswerIds.Contains(qa.Answer.Id));
 
             var examResult = new ExamResult
             {
                 UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
-                ExamCategoryId = examCategoryVM.SelectedCategoryId,
+                ExamCategoryId = viewModel.SelectedCategoryId,
                 CorrectAnswers = correctAnswersCount,
-                TotalQuestions = examCategoryVM.Questions.Count,
+                TotalQuestions = viewModel.Questions.Count,
                 DateTaken = DateTime.Now,
             };
-
             _context.ExamResults.Add(examResult);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
-            var examCategory = _context.ExamCategories.FirstOrDefault(ec => ec.Id == examCategoryVM.SelectedCategoryId);
-
-            var examResults = _context.ExamResults
-                .Include(er => er.User)
-                .Where(er => er.ExamCategoryId == examCategory.Id)
-                .ToList();
-
-            var examResultVM = new ExamResultVM
-            {
-                ExamResults = examResults,
-                SelectedCategoryId = examCategoryVM.SelectedCategoryId,
-                SelectedCategoryName = examCategoryVM.SelectedCategoryName,
-                Questions = examCategoryVM.Questions,
-                Answers = examCategoryVM.Answers,
-                QuestionAnswers = examCategoryVM.QuestionAnswers,
-                SelectedAnswerIds = examCategoryVM.SelectedAnswerIds,
-                CorrectAnswerIds = examCategoryVM.CorrectAnswerIds,
-                CorrectAnswerCount= correctAnswersCount,
-            };
-
-            return View(examResultVM);
+            return View("Result", viewModel);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Result(ExamCategoryVM examCategoryVM)
+        {
+            //int correctAnswersCount = examCategoryVM.QuestionAnswers
+            //    .Where(qa => qa.Answer.Status)
+            //    .Count(qa => examCategoryVM.SelectedAnswerIds.Contains(qa.Answer.Id));
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+            //var examResult = new ExamResult
+            //{
+            //    UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+            //    ExamCategoryId = examCategoryVM.SelectedCategoryId,
+            //    CorrectAnswers = correctAnswersCount,
+            //    TotalQuestions = examCategoryVM.Questions.Count,
+            //    DateTaken = DateTime.Now,
+            //};
+
+            //_context.ExamResults.Add(examResult);
+            //await _context.SaveChangesAsync();
+
+            return View(examCategoryVM);
+          }
+
+
+                [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

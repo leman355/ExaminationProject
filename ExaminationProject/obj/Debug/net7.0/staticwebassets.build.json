@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "2HbMMKaR9pEnJ+mYBnnILAlxMGJh3VtQKqAAnQHWdLU=",
+  "Hash": "jxdKNGxl4pigleaDc07g93AJ4lgl0rTtqoJu/lbhNuk=",
   "Source": "ExaminationProject",
   "BasePath": "_content/ExaminationProject",
   "Mode": "Default",
@@ -32247,6 +32247,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\main.js"
+    },
+    {
+      "Identity": "C:\\Users\\user\\Desktop\\ExaminationProject\\ExaminationProject\\wwwroot\\uploads\\1ab0efb4-94c7-45d0-9545-c066a4e2f3217. Бабочка.jpg",
+      "SourceId": "ExaminationProject",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\user\\Desktop\\ExaminationProject\\ExaminationProject\\wwwroot\\",
+      "BasePath": "_content/ExaminationProject",
+      "RelativePath": "uploads/1ab0efb4-94c7-45d0-9545-c066a4e2f3217. Бабочка.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\1ab0efb4-94c7-45d0-9545-c066a4e2f3217. Бабочка.jpg"
     },
     {
       "Identity": "C:\\Users\\user\\Desktop\\ExaminationProject\\ExaminationProject\\wwwroot\\uploads\\2f57f145-e44f-4a78-a9e1-e2c4ea8507cf9. Пустыня.jpg",
