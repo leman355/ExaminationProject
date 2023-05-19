@@ -69,10 +69,11 @@
                             </td>
                             <td>
                                 <div class="d-flex">
-                                <a asp-area="Dashboard" asp-controller="User" asp-action="AddRole" asp-route-id="@user.Id" class="badge btn-outline-info">Add role</a>
+                                    <a asp-area="Dashboard" asp-controller="User" asp-action="AddRole" asp-route-id="@user.Id" class="badge btn-outline-info">Add role</a>
+                                    <a href="/dashboard/user/removerole/@user.Id" class="badge btn-outline-info">Remove role</a>
                                 @*<a href="/dashboard/role/delete/@user.Id">Delete</a>*@
-                                <a href="/dashboard/user/edit/@user.Id" class="badge btn-outline-warning">Edit</a>
                                 </div>
+                                <a href="/dashboard/user/edit/@user.Id" class="badge btn-outline-warning">Edit</a>
                                 <a href="/dashboard/user/delete/@user.Id" class="badge btn-outline-danger">Delete User</a>
 
                             </td>

@@ -67,7 +67,8 @@ namespace ExaminationProject.Areas.Dashboard.Controllers
 
             _context.UserGroups.Add(userGroup);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+         
+            return RedirectToAction(nameof(Index));
         }
         private static string GeneratePassword()
         {
@@ -129,8 +130,8 @@ namespace ExaminationProject.Areas.Dashboard.Controllers
                 };
                 await _context.UserGroups.AddAsync(ug);
                 await _context.SaveChangesAsync();
-
-                return RedirectToAction("Index");
+             
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception e)
             {
@@ -177,6 +178,52 @@ namespace ExaminationProject.Areas.Dashboard.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> RemoveRole(string id)
+        {
+            if (id == null)
+                return NotFound();
+
+            User user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+                return NotFound();
+
+            var userRoles = await _userManager.GetRolesAsync(user);
+            var roles = _roleManager.Roles.Select(x => x.Name).ToList();
+
+            UserRoleAddViewModel vm = new UserRoleAddViewModel()
+            {
+                User = user,
+                Roles = userRoles
+            };
+
+            return View("RemoveRole", vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveRole(string id, string role)
+        {
+            if (id == null || role == null)
+                return NotFound();
+
+            User user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+                return NotFound();
+
+            if (await _userManager.IsInRoleAsync(user, role))
+            {
+                var userRemoveRole = await _userManager.RemoveFromRoleAsync(user, role);
+
+                if (!userRemoveRole.Succeeded)
+                {
+                    ViewBag.Error = "Failed to remove role.";
+                    return View();
+                }
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+
 
         [HttpGet]
         public async Task<IActionResult> Delete(string id)
@@ -193,7 +240,7 @@ namespace ExaminationProject.Areas.Dashboard.Controllers
                 var us = await _context.Users.SingleOrDefaultAsync(x => x.Id == user.Id);
                 us.IsDeleted = true;
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception)
             {

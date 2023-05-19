@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "jxdKNGxl4pigleaDc07g93AJ4lgl0rTtqoJu/lbhNuk=",
+  "Hash": "GVVA3UhuJhUoSxu8Z2REeOd8ekx5fTHhWfDoKaqXA2o=",
   "Source": "ExaminationProject",
   "BasePath": "_content/ExaminationProject",
   "Mode": "Default",
@@ -32298,6 +32298,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\700f3681-b5ff-476b-bf94-81bd9acc9ffd1153100.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\user\\Desktop\\ExaminationProject\\ExaminationProject\\wwwroot\\uploads\\9002294a-f06c-4213-97d7-7756905f18498. Божья коровка.jpg",
+      "SourceId": "ExaminationProject",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\user\\Desktop\\ExaminationProject\\ExaminationProject\\wwwroot\\",
+      "BasePath": "_content/ExaminationProject",
+      "RelativePath": "uploads/9002294a-f06c-4213-97d7-7756905f18498. Божья коровка.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\9002294a-f06c-4213-97d7-7756905f18498. Божья коровка.jpg"
     },
     {
       "Identity": "C:\\Users\\user\\Desktop\\ExaminationProject\\ExaminationProject\\wwwroot\\uploads\\ac5455bf-2e12-441c-9f49-bc78af8cd46e1. Черный кот с рыбкой.jpg",
