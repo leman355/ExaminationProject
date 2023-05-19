@@ -1,9 +1,17 @@
-﻿@model ExamResultVM
+﻿@model ExamCategoryVM
 
 <main>
     <h1 class="title text-center py-3">@Model.SelectedCategoryName</h1>
     <div class="result mt-3 text-center">
-        <p class="lead">You have answered @Model.CorrectAnswerCount out of @Model.Questions.Count questions correctly.</p>
+        @{
+            int totalQuestions = Model.Questions.Count(q => !q.IsDeleted);
+            int correctAnswerCount = Model.SelectedAnswerIds.Count(a => Model.CorrectAnswerIds.Contains(a));
+            int percentage = (int)(((double)correctAnswerCount / totalQuestions) * 100);
+        }
+        <div class="result mt-3 text-center">
+            <p class="lead">You have answered @correctAnswerCount out of @totalQuestions questions correctly.</p>
+            <p class="lead">Percentage of correct answers: @percentage%</p>
+        </div>
     </div>
     <div class="exam-results mt-3">
         <table class="table">
@@ -22,7 +30,7 @@
                         <td>@examResult.DateTaken.ToShortDateString()</td>
                         <td>@examResult.ExamCategory.CategoryName</td>
                         <td>@examResult.CorrectAnswers</td>
-                        <td>@examResult.TotalQuestions</td>
+                        <td>@Model.Questions.Count(q => !q.IsDeleted)</td>
                     </tr>
                 }
             </tbody>

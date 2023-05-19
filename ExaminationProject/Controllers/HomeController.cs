@@ -121,7 +121,7 @@ namespace ExaminationProject.Controllers
                 UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
                 ExamCategoryId = viewModel.SelectedCategoryId,
                 CorrectAnswers = correctAnswersCount,
-                TotalQuestions = viewModel.Questions.Count,
+                TotalQuestions = viewModel.Questions.Count(q => !q.IsDeleted),
                 DateTaken = DateTime.Now,
             };
             _context.ExamResults.Add(examResult);
