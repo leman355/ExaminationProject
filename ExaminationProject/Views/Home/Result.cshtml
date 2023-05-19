@@ -1,5 +1,6 @@
 ﻿@model ExamCategoryVM
 
+
 <main>
     <div class="container">
         <h1 class="title text-center py-3">@Model.SelectedCategoryName</h1>
@@ -7,16 +8,20 @@
             <ol>
                 @foreach (var question in Model.Questions)
                 {
-                    if (@question.IsDeleted == false)
+                    if (!question.IsDeleted)
                     {
                         <li style="font-size:1.5rem">
                             @question.Content
                             <div class="answers mt-3">
                                 <label class="d-block mb-2">
+                                    @{
+                                        bool isQuestionCorrect = true; // Assume the question is correct initially
+                                    }
                                     @foreach (var questionanswer in Model.QuestionAnswers.Where(x => x.QuestionId == question.Id && x.Question.ExamCategoryId == Model.SelectedCategoryId))
                                     {
                                         bool isSelected = Model.SelectedAnswerIds.Contains(questionanswer.AnswerId);
                                         bool isCorrect = Model.CorrectAnswerIds.Contains(questionanswer.AnswerId);
+                                        double answerWeight = isCorrect ? 0.5 : 0.0; // Assign 0.5 weight to correct answers
 
                                         <div class="form-check" style="font-size:1rem">
                                             <input value="@questionanswer.AnswerId" name="selectedAnswerIds" id="@questionanswer.AnswerId" type="checkbox" disabled @if (isSelected)
@@ -26,21 +31,28 @@
 
                                             <label class="form-check-label mx-3" style="user-select:none" for="@questionanswer.AnswerId">
                                                 @questionanswer.Answer.Option
-                                                @if (isCorrect)
+                                                @if (isSelected && isCorrect)
                                                 {
                                                     <span class="badge bg-success mx-2">true</span>
                                                 }
-                                                @if (!isCorrect && isSelected)
+                                                else if (isCorrect)
+                                                {
+                                                    <span class="badge bg-success mx-2">true</span>
+                                                }
+                                                else if (isSelected && !isCorrect)
                                                 {
                                                     <span class="badge bg-danger mx-2">false</span>
+                                                    {
+                                                        isQuestionCorrect = false; // Update the flag if at least one selected answer is incorrect
+                                                    }
                                                 }
-                                                @*
-                                                <small class="text-muted">
-                                                Correct answer: @Model.QuestionAnswers.Single(x => x.QuestionId == question.Id && x.Answer.Status)?.Answer.Option
-                                                </small>
-                                                *@
-                                                
                                             </label>
+                                        </div>
+                                    }
+                                    @if (!Model.SelectedAnswerIds.Any(x => Model.QuestionAnswers.Any(qa => qa.QuestionId == question.Id && qa.Question.ExamCategoryId == Model.SelectedCategoryId && x == qa.AnswerId))) // Display an error message if no answer is selected
+                                    {
+                                        <div class="alert alert-danger mt-2">
+                                            You have not answered this question.
                                         </div>
                                     }
                                 </label>
@@ -52,18 +64,13 @@
         </div>
         @{
             int totalQuestions = Model.Questions.Count(q => !q.IsDeleted);
-            int correctAnswerCount = Model.SelectedAnswerIds.Count(a => Model.CorrectAnswerIds.Contains(a) && !Model.SelectedAnswerIds.Except(Model.CorrectAnswerIds).Contains(a));
-            int percentage = (int)(((double)correctAnswerCount / totalQuestions) * 100);
+            int correctAnswerCount = Model.Questions.Count(q => Model.QuestionAnswers.Where(qa => qa.QuestionId == q.Id && qa.Question.ExamCategoryId == Model.SelectedCategoryId)
+                                                    .All(qa => Model.SelectedAnswerIds.Contains(qa.AnswerId) == Model.CorrectAnswerIds.Contains(qa.AnswerId)));
+            double percentage = Math.Round((correctAnswerCount / (double)totalQuestions) * 100, 2);
         }
         <div class="result mt-3 text-center">
             <p class="lead">You have answered @correctAnswerCount out of @totalQuestions questions correctly.</p>
-            <p class="lead">Percentage of correct answers: @percentage%</p>
+            <p class="lead">Percentage of correct answers: @percentage.ToString("0.##")%</p>
         </div>
-
-
-        @*<div class="result mt-3 text-center">
-        <p class="lead">You have answered @Model.CorrectAnswerCount out of @Model.Questions.Count(q => !q.IsDeleted) questions correctly.</p>
-        </div>*@
     </div>
-
 </main>

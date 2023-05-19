@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "5pAt1LSZobNkCV2JAh986KZVk/GvrnoW4YRZNHnfZM0=",
+  "Hash": "rNcZx4MCm5v3HimqCuX8bYBTCkR3Z6K/7wAJaj6BFfA=",
   "Source": "ExaminationProject",
   "BasePath": "_content/ExaminationProject",
   "Mode": "Default",
@@ -32247,6 +32247,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\main.js"
+    },
+    {
+      "Identity": "C:\\Users\\user\\Desktop\\ExaminationProject\\ExaminationProject\\wwwroot\\uploads\\4a5e62e1-c72a-4c9f-8892-dad9d935a2886. Жираф.jpg",
+      "SourceId": "ExaminationProject",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\user\\Desktop\\ExaminationProject\\ExaminationProject\\wwwroot\\",
+      "BasePath": "_content/ExaminationProject",
+      "RelativePath": "uploads/4a5e62e1-c72a-4c9f-8892-dad9d935a2886. Жираф.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\4a5e62e1-c72a-4c9f-8892-dad9d935a2886. Жираф.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\user\\Desktop\\ExaminationProject\\ExaminationProject\\wwwroot\\uploads\\87f44806-cd02-44b0-8f23-3c9387028ef07. Бабочка.jpg",
+      "SourceId": "ExaminationProject",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\user\\Desktop\\ExaminationProject\\ExaminationProject\\wwwroot\\",
+      "BasePath": "_content/ExaminationProject",
+      "RelativePath": "uploads/87f44806-cd02-44b0-8f23-3c9387028ef07. Бабочка.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\87f44806-cd02-44b0-8f23-3c9387028ef07. Бабочка.jpg"
     },
     {
       "Identity": "C:\\Users\\user\\Desktop\\ExaminationProject\\ExaminationProject\\wwwroot\\uploads\\e04cd1d4-a140-47d4-8ca6-25a14d17f11310. Цветы.jpg",

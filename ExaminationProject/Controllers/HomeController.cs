@@ -35,7 +35,7 @@ namespace ExaminationProject.Controllers
         }
 
         [HttpGet("examcategory/{id}")]
-        //[Authorize(Policy = "IsNotDeletedPolicy")]
+        [Authorize(Policy = "IsNotDeletedPolicy")]
         public IActionResult ExamCategory(int id)
         {
             var examCategory = _context.ExamCategories.Where(x => x.Id == id).FirstOrDefault();
@@ -80,7 +80,6 @@ namespace ExaminationProject.Controllers
                 .Where(x => questionIds.Contains(x.QuestionId))
                 .ToList();
 
-            // Обновляем значения свойства Selected для выбранных ответов
             foreach (var answer in questionAnswers.Select(x => x.Answer))
             {
                 answer.Selected = selectedAnswerIds.Contains(answer.Id);
@@ -112,10 +111,34 @@ namespace ExaminationProject.Controllers
                 CorrectAnswerIds = correctAnswerIds,
             };
 
-            int correctAnswersCount = viewModel.QuestionAnswers
-               .Where(qa => qa.Answer.Status)
-               .Count(qa => viewModel.SelectedAnswerIds.Contains(qa.Answer.Id));
+            int correctAnswersCount = 0;
 
+            foreach (var question in viewModel.Questions)
+            {
+                if (!question.IsDeleted)
+                {
+                    bool isQuestionCorrect = true;
+
+                    foreach (var questionanswer in viewModel.QuestionAnswers.Where(x => x.QuestionId == question.Id && x.Question.ExamCategoryId == viewModel.SelectedCategoryId))
+                    {
+                        bool isSelected = viewModel.SelectedAnswerIds.Contains(questionanswer.AnswerId);
+                        bool isCorrect = viewModel.CorrectAnswerIds.Contains(questionanswer.AnswerId);
+
+                        if (isCorrect && !isSelected)
+                        {
+                            isQuestionCorrect = false;
+                            break;
+                        }
+                    }
+
+                    if (isQuestionCorrect)
+                    {
+                        correctAnswersCount++;
+                    }
+                }
+            }
+
+        
             var examResult = new ExamResult
             {
                 UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
@@ -133,27 +156,11 @@ namespace ExaminationProject.Controllers
         [HttpGet]
         public async Task<IActionResult> Result(ExamCategoryVM examCategoryVM)
         {
-            //int correctAnswersCount = examCategoryVM.QuestionAnswers
-            //    .Where(qa => qa.Answer.Status)
-            //    .Count(qa => examCategoryVM.SelectedAnswerIds.Contains(qa.Answer.Id));
-
-            //var examResult = new ExamResult
-            //{
-            //    UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
-            //    ExamCategoryId = examCategoryVM.SelectedCategoryId,
-            //    CorrectAnswers = correctAnswersCount,
-            //    TotalQuestions = examCategoryVM.Questions.Count,
-            //    DateTaken = DateTime.Now,
-            //};
-
-            //_context.ExamResults.Add(examResult);
-            //await _context.SaveChangesAsync();
-
             return View(examCategoryVM);
-          }
+        }
 
 
-                [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
